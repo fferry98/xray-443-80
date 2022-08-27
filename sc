@@ -374,7 +374,8 @@ cat > /etc/xray/config.json << END
      },
     {
 #inishadowsocks
-        "listen": "run/xray/shadowsocks_ws.sock",
+        "listen": "127.0.0.1",
+	"port": 30300,
         "protocol": "shadowsocks",
         "settings": {
 		  "method": "2022-blake3-aes-256-gcm",
@@ -543,7 +544,7 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 sed -i '$ ilocation = /ssws' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://unix:/run/xray/shadowsocks_ws.sock;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:30300;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
