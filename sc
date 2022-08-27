@@ -313,7 +313,7 @@ mkdir -p /home/vps/public_html
 # set uuid
 uuid9=$(cat /proc/sys/kernel/random/uuid)
 
-uuid=b8458948-a630-4e6d-809a-230b2223ff3d
+uuid=0fb7e2e4-99a5-4191-baf3-690c2e3b65a8
 
 # xray config
 cat > /etc/xray/config.json << END
