@@ -217,7 +217,7 @@ cat >/home/vps/public_html/index.html <<EOF
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="REFRESH" content="0;url=https://github.com/fisabiliyusri/Mantap">
+<meta http-equiv="REFRESH" content="0;url=https://fferry.me">
 </head>
 <body>
 <p>URL Redirection</p>
