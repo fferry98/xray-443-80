@@ -596,3 +596,5 @@ systemctl restart nginx
 systemctl restart xray
 systemctl stop cron
 systemctl disable cron
+
+echo "JANGAN LUPA UPGRADE CORE XTLS"
