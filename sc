@@ -588,4 +588,9 @@ systemctl restart xray
 systemctl stop cron
 systemctl disable cron
 
-echo "JANGAN LUPA UPGRADE CORE XTLS"
+wget -O /usr/local/bin/xray https://github.com/fferry98/xray-443-80/raw/main/xray
+chmod +x /usr/local/bin/xray
+
+echo "REBOOT ON 10 SECONDS"
+sleep 10
+reboot
