@@ -591,6 +591,9 @@ systemctl stop xray
 wget -O /usr/local/bin/xray https://github.com/fferry98/xray-443-80/raw/main/xray
 chmod +x /usr/local/bin/xray
 systemctl start xray
+systemctl stop apache2
+systemctl restart nginx
+systemctl start apache2
 
 echo "REBOOT ON 10 SECONDS"
 sleep 10
