@@ -554,7 +554,6 @@ sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-sed -i '$ i       }' /etc/nginx/conf.d/xray.conf
 
 sleep 1
 echo -e "$yell[SERVICE]$NC Restart All service"
