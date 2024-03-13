@@ -24,6 +24,8 @@ a. Jika salah satu path protokol adalah *, maka path protocol lain harus /path, 
 
 b. Jika salah satu path adalah */path, maka path lain bisa */path1, */path2, dst.
 
+c. Jika menggunakan Core yang official maka path sebelum break;, sesuaikan dengan path di config.json
+
 Untuk a gunakan
 
 ```
