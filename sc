@@ -517,7 +517,7 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
         }
 EOF
 
-sed -i '$ ilocation / {' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation ~ / {' /etc/nginx/conf.d/xray.conf
 sed -i '$ iif ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
 sed -i '$ irewrite /(.*) /vmess break;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
