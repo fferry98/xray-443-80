@@ -39,6 +39,6 @@ untuk b gunakan
 ```
 location ~ /path {
 ...
-location ~ /path2 {
+location ~ /path1 {
 ...
 ```
