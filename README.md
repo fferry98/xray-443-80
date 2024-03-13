@@ -21,6 +21,7 @@ bash sc
 4. NOTE
 
 a. Jika salah satu path protokol adalah *, maka path protocol lain harus /path, /path1, dst.
+
 b. Jika salah satu path adalah */path, maka path lain bisa */path1, *path/2, dst.
 
 Untuk a gunakan
