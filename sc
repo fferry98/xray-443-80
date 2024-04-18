@@ -191,7 +191,7 @@ server {
   error_log /var/log/nginx/vps-error.log error;
   root   /home/vps/public_html;
 
-  location / {
+  location /file {
     index  index.html index.htm index.php;
     try_files $uri $uri/ /index.php?$args;
   }
@@ -285,21 +285,10 @@ apt install curl pwgen openssl netcat cron -y
 # install xray
 sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-chown www-data.www-data $domainSock_dir
 # Make Folder XRay
-mkdir -p /var/log/xray
 mkdir -p /etc/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
-
-
 
 ## crt xray
 systemctl stop nginx
@@ -314,14 +303,14 @@ mkdir -p /home/vps/public_html
 uuid9=$(cat /proc/sys/kernel/random/uuid)
 
 uuid=0fb7e2e4-99a5-4191-baf3-690c2e3b65a8
+uuid1=1fb7e2e4-99a5-4191-baf3-690c2e3b65a8
+hosthu=$(cat /root/domain)
 
 # xray config
 cat > /etc/xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
+    "loglevel": "none"
   },
   "inbounds": [
       {
@@ -333,9 +322,10 @@ cat > /etc/xray/config.json << END
       },
       "tag": "api"
     },
+#inivmesshu
      {
-#inivmess
-     "listen": "/run/xray/vmess_ws.sock",
+     "listen": "127.0.0.1",
+     "port": 31000.
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -346,52 +336,33 @@ cat > /etc/xray/config.json << END
           ]
        },
        "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/"
+         "network": "httpupgrade",
+            "httpupgradeSettings": {
+                "path": "/vmhu",
+                "host": "$(hosthu)"
           }
         }
      },
-    {
-#initrojan
-      "listen": "/run/xray/trojan_ws.sock",
-      "protocol": "trojan",
+#inivmessws
+     {
+     "listen": "127.0.0.1",
+     "port": 31100.
+     "protocol": "vmess",
       "settings": {
-          "decryption":"none",		
-           "clients": [
-              {
-                 "password": "${uuid}"
-              }
-          ],
-         "udp": true
+            "clients": [
+               {
+                 "id": "${uuid1}",
+                 "alterId": 0
+             }
+          ]
        },
        "streamSettings":{
-           "network": "ws",
-           "wsSettings": {
-               "path": "/trws"
-            }
-         }
-     },
-    {
-#inishadowsocks
-        "listen": "127.0.0.1",
-	"port": 30300,
-        "protocol": "shadowsocks",
-        "settings": {
-		  "method": "2022-blake3-aes-256-gcm",
-		  "password": "FityanrhFoX1tiCgqOlDA1M/8fzKhiKGJLS7wv43eXk=",
-          "clients": [
-            {"password": "BiyungrhFoX1tiCgqOlDA1M/8fzKhiKGJLS7wv43eXk=", "email": "Biyung"}
-          ],
-          "network": "tcp,udp"
-       },
-       "streamSettings":{
-          "network": "ws",
-          "wsSettings": {
-               "path": "/ssws"
-           }
+         "network": "ws",
+            "wsSettings": {
+                "path": "/vmws"
+          }
         }
-     }	
+     }
   ],
   "outbounds": [
     {
@@ -486,20 +457,6 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 EOF
-cat > /etc/systemd/system/runn.service <<EOF
-[Unit]
-Description=Runn
-After=network.target
-
-[Service]
-Type=simple
-ExecStartPre=-/bin/mkdir -p /var/run/xray
-ExecStart=/bin/chown www-data:www-data /var/run/xray
-Restart=on-abort
-
-[Install]
-WantedBy=multi-user.target
-EOF
 
 #nginx config
 cat >/etc/nginx/conf.d/xray.conf <<EOF
@@ -514,46 +471,34 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;
+location ~ /vmhu {
+if ($http_upgrade != "Upgrade") {
+rewrite /(.*) /vmhu break;
+}
+proxy_redirect off;
+proxy_pass http://127.0.0.1:31000;
+proxy_http_version 1.1;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+proxy_set_header Host $http_host;
+}
+location ~ /vmws {
+if ($http_upgrade != "Upgrade") {
+rewrite /(.*) /vmws break;
+}
+proxy_redirect off;
+proxy_pass http://127.0.0.1:31100;
+proxy_http_version 1.1;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+proxy_set_header Host $http_host;
+}
         }
 EOF
-
-sed -i '$ ilocation ~ / {' /etc/nginx/conf.d/xray.conf
-sed -i '$ iif ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
-sed -i '$ irewrite /(.*) /vmess break;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://unix:/run/xray/vmess_ws.sock;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /trws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://unix:/run/xray/trojan_ws.sock;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /ssws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:30300;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sleep 1
 echo -e "$yell[SERVICE]$NC Restart All service"
@@ -588,7 +533,7 @@ systemctl stop cron
 systemctl disable cron
 
 systemctl stop xray
-wget -O /usr/local/bin/xray https://github.com/fferry98/xray-443-80/raw/main/xray
+wget -O /usr/local/bin/xray https://github.com/dharak36/XrayDynamicPath/releases/download/xray/xray.linux.64bit
 chmod +x /usr/local/bin/xray
 systemctl start xray
 systemctl stop apache2
