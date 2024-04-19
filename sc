@@ -325,7 +325,7 @@ cat > /etc/xray/config.json << END
 #inivmesshu
      {
      "listen": "127.0.0.1",
-     "port": 31000.
+     "port": 31000,
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -346,7 +346,7 @@ cat > /etc/xray/config.json << END
 #inivmessws
      {
      "listen": "127.0.0.1",
-     "port": 31100.
+     "port": 31100,
      "protocol": "vmess",
       "settings": {
             "clients": [
