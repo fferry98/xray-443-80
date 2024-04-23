@@ -486,7 +486,7 @@ wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 bash acme.sh --install
 
 domain=$(cat /root/domain)
-sudo "$HOME/.acme.sh/acme.sh" --issue -d ${domain} --standalone -k ec-256 --server letsencrypt --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
+"$HOME/.acme.sh/acme.sh" --issue -d ${domain} --standalone -k ec-256 --server letsencrypt --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
 
 systemctl restart nginx
 systemctl restart xray
