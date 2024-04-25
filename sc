@@ -191,7 +191,7 @@ server {
   error_log /var/log/nginx/vps-error.log error;
   root   /home/vps/public_html;
 
-  location /file {
+  location /file/ {
     index  index.html index.htm index.php;
     try_files $uri $uri/ /index.php?$args;
   }
@@ -500,6 +500,7 @@ systemctl start xray
 systemctl stop apache2
 systemctl restart nginx
 systemctl start apache2
+rm /home/vps/public_html/*
 
 echo "REBOOT ON 10 SECONDS"
 sleep 10
