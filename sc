@@ -338,8 +338,7 @@ cat > /etc/xray/config.json << END
        "streamSettings":{
          "network": "httpupgrade",
             "httpupgradeSettings": {
-                "path": "/vmhu",
-                "host": "${hosthu}"
+                "path": "/vmhu"
           }
         }
      },
