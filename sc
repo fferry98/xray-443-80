@@ -339,7 +339,7 @@ cat > /etc/xray/config.json << END
          "network": "httpupgrade",
             "httpupgradeSettings": {
                 "path": "/vmhu",
-                "host": "$(hosthu)"
+                "host": "${hosthu}"
           }
         }
      },
