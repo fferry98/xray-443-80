@@ -5,6 +5,8 @@
 read -r -p "domainmu: " awalsekali
 read -r -p "token cfmu: " tokencf
 
+export CF_Token="${tokencf}"
+
 cat >/root/domain <<EOF
 ${awalsekali}
 EOF
