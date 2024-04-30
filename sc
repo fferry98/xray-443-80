@@ -487,7 +487,7 @@ cd /root/
 wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 bash acme.sh --install
 wget -O $HOME/.acme.sh/dns_cf.sh https://raw.githubusercontent.com/acmesh-official/acme.sh/master/dnsapi/dns_cf.sh
-chmod +x dns_cf.sh
+chmod +x $HOME/.acme.sh/dns_cf.sh
 
 domain=$(cat /root/domain)
 "$HOME/.acme.sh/acme.sh" --issue -d ${domain} -d *.${domain} --dns dns_cf --standalone -k ec-256 --server letsencrypt --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
