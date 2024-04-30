@@ -490,7 +490,7 @@ wget -O $HOME/.acme.sh/dns_cf.sh https://raw.githubusercontent.com/acmesh-offici
 chmod +x $HOME/.acme.sh/dns_cf.sh
 
 domain=$(cat /root/domain)
-"$HOME/.acme.sh/acme.sh" --issue -d ${domain} -d *.${domain} --dns dns_cf --standalone -k ec-256 --server letsencrypt --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
+"$HOME/.acme.sh/acme.sh" --issue --standalone -d ${domain} -d *.${domain} --dns dns_cf -k ec-256 --server letsencrypt --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
 
 systemctl restart nginx
 systemctl restart xray
