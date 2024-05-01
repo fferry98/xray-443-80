@@ -44,3 +44,5 @@ location ~ /path {
 location ~ /path1 {
 ...
 ```
+
+untuk ubuntu, edit /etc/nginx/nginx.conf bagian user www-data; , menjadi user root; jika ingin akses port 89.
