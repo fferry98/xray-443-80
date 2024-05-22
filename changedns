@@ -1,0 +1,3 @@
+systemctl restart resolvconf
+systemctl restart systemd-resolved
+systemctl restart NetworkManager
