@@ -56,7 +56,7 @@ systemctl restart resolvconf
 systemctl restart systemd-resolved
 systemctl restart NetworkManager
 
-wget -O /usr/bin/ https://raw.githubusercontent.com/fferry98/xray-443-80/main/changedns
+wget -O /usr/bin/changedns https://raw.githubusercontent.com/fferry98/xray-443-80/main/changedns
 chmod +x /usr/bin/changedns
 
 echo "clear" >> .profile
