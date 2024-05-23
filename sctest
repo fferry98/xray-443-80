@@ -352,8 +352,6 @@ echo -e "[ ${green}ok${NC} ] Enable & restart xray "
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
 
 sleep 1
 
