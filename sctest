@@ -25,6 +25,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
+apt-get install -y debconf-utils
 apt install socat netfilter-persistent -y
 apt install vnstat lsof fail2ban -y
 apt install curl sudo neofetch -y
@@ -164,6 +165,8 @@ domain=$(cat /root/domain)
 sleep 1
 mkdir -p /etc/xray 
 apt install iptables iptables-persistent -y
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 sleep 1
 
 
