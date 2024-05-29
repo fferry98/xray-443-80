@@ -28,7 +28,6 @@ apt dist-upgrade -y
 apt install socat netfilter-persistent -y
 apt install vnstat lsof fail2ban -y
 apt install curl sudo neofetch -y
-apt install screen screenfetch -y
 apt -y install wget
 apt -y install net-tools
 mkdir /user >> /dev/null 2>&1
@@ -162,7 +161,6 @@ sleep 3
 domain=$(cat /root/domain)
 sleep 1
 mkdir -p /etc/xray 
-apt install iptables iptables-persistent -y
 sleep 1
 
 
