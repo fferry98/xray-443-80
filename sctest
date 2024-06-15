@@ -22,12 +22,13 @@ cd
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
  
 #update
+add-apt-repository ppa:zhangsongcui3371/fastfetch -y
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt install socat netfilter-persistent -y
 apt install vnstat lsof fail2ban -y
-apt install curl sudo neofetch -y
+apt install curl sudo fastfetch -y
 apt -y install wget
 apt -y install net-tools
 mkdir /user >> /dev/null 2>&1
@@ -57,7 +58,8 @@ mkdir /tmp >> /dev/null 2>&1
 #chmod +x /usr/bin/changedns
 
 echo "clear" >> .profile
-echo "neofetch" >> .profile
+echo "fastfetch" >> .profile
+echo "printf '\n'" >> .profile
 
 # install webserver
 apt -y install nginx
