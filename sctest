@@ -22,7 +22,9 @@ cd
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
  
 #update
+apt install software-properties-common
 add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+add-apt-repository ppa:ondrej/nginx-mainline -y
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
@@ -194,7 +196,7 @@ cat > /etc/xray/config.json << END
     "loglevel": "none"
   },
   "inbounds": [
-      {
+    {
       "listen": "127.0.0.1",
       "port": 10085,
       "protocol": "dokodemo-door",
@@ -204,44 +206,44 @@ cat > /etc/xray/config.json << END
       "tag": "api"
     },
 #inivmesshu
-     {
-     "listen": "127.0.0.1",
-     "port": 31000,
-     "protocol": "vmess",
+    {
+      "listen": "127.0.0.1",
+      "port": 31000,
+      "protocol": "vmess",
       "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "httpupgrade",
-            "httpupgradeSettings": {
-                "path": "/vmhu"
+        "clients": [
+          {
+            "id": "${uuid}",
+            "alterId": 0
           }
-        }
+        ]
+       },
+       "streamSettings": {
+         "network": "httpupgrade",
+         "httpupgradeSettings": {
+           "path": "/vmhu"
+         }
+       }
      },
 #inivmessws
      {
-     "listen": "127.0.0.1",
-     "port": 31100,
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid1}",
-                 "alterId": 0
-             }
-          ]
+       "listen": "127.0.0.1",
+       "port": 31100,
+       "protocol": "vmess",
+       "settings": {
+         "clients": [
+           {
+             "id": "${uuid1}",
+             "alterId": 0
+           }
+        ]
        },
-       "streamSettings":{
+       "streamSettings": {
          "network": "ws",
-            "wsSettings": {
-                "path": "/vmws"
-          }
-        }
+         "wsSettings": {
+           "path": "/vmws"
+         }
+       }
      }
   ],
   "outbounds": [
