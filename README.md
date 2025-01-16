@@ -20,11 +20,11 @@ bash sc
 
 4. NOTE
 
-a. Jika salah satu path protokol adalah *, maka path protocol lain harus /path, /path1, dst.
+   a. Jika salah satu path protokol adalah *, maka path protocol lain harus /path, /path1, dst.
 
-b. Jika salah satu path adalah */path, maka path lain bisa */path1, */path2, dst.
+   b. Jika salah satu path adalah */path, maka path lain bisa */path1, */path2, dst.
 
-c. Jika menggunakan Core yang official maka samakan path sebelum break; dengan path di config.json
+   c. Jika menggunakan Core yang official maka samakan path sebelum break; dengan path di config.json
 
 Untuk a gunakan
 
