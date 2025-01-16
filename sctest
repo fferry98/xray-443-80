@@ -217,34 +217,34 @@ cat > /etc/xray/config.json << END
             "alterId": 0
           }
         ]
-       },
-       "streamSettings": {
-         "network": "httpupgrade",
-         "httpupgradeSettings": {
-           "path": "/vmhu"
-         }
-       }
-     },
+      },
+      "streamSettings": {
+        "network": "httpupgrade",
+        "httpupgradeSettings": {
+          "path": "/vmhu"
+        }
+      }
+    },
 #inivmessws
-     {
-       "listen": "127.0.0.1",
-       "port": 31100,
-       "protocol": "vmess",
-       "settings": {
-         "clients": [
-           {
+    {
+      "listen": "127.0.0.1",
+      "port": 31100,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
              "id": "${uuid1}",
              "alterId": 0
-           }
+          }
         ]
-       },
-       "streamSettings": {
-         "network": "ws",
-         "wsSettings": {
-           "path": "/vmws"
-         }
-       }
-     }
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vmws"
+        }
+      }
+    }
   ],
   "outbounds": [
     {
