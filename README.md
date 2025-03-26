@@ -1,3 +1,8 @@
+# PREREQUISITE
+
+1. Add DNS in cloudflare (pointing, subdomain, and wildcard)
+2. Enable GRPC in cloudflare
+
 # STEP INSTALL
 
 1. Update
