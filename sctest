@@ -382,6 +382,7 @@ systemctl start apache2
 rm /home/vps/public_html/*
 systemctl daemon-reload
 
+echo "UUID HARDCOCED, PLEASE CHANGE"
 echo "REBOOT ON 10 SECONDS"
 sleep 10
 reboot
