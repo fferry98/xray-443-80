@@ -1,0 +1,23 @@
+    server {
+             listen 80;
+             listen [::]:80;
+             listen 443 ssl reuseport;
+             listen [::]:443 ssl reuseport;
+             listen 443 quic reuseport;
+             listen [::]:443 quic reuseport;
+             http2 on;
+             server_name _;
+             ssl_certificate /etc/xray/xray.crt;
+             ssl_certificate_key /etc/xray/xray.key;
+             ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
+             ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+             root /home/vps/public_html;
+location /vlxh {
+client_max_body_size 0;
+grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+client_body_timeout 5m;
+grpc_read_timeout 315;
+grpc_send_timeout 5m;
+grpc_pass unix:/dev/shm/xrxh.socket;
+}
+        }

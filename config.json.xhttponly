@@ -1,0 +1,101 @@
+{
+  "log" : {
+    "loglevel": "none"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10085,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
+#inivlessxh
+    {
+      "listen": "/dev/shm/xrxh.socket,0666",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "0fb7e2e4-99a5-4191-baf3-690c2e3b65a8",
+            "alterId": 0
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "path": "/vlxh"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "warp-socks5",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 40000
+          }
+        ]
+      }
+    },
+    {
+      "tag":"warp",
+      "protocol":"freedom",
+      "proxySettings":{
+        "tag":"warp-socks5"
+      },
+      "settings":{
+        "domainStrategy":"UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
+  }
+}
