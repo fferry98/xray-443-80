@@ -24,7 +24,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 #update
 apt install software-properties-common
 add-apt-repository ppa:zhangsongcui3371/fastfetch -y
-add-apt-repository ppa:ondrej/nginx-mainline -y
+add-apt-repository ppa:ondrej/nginx -y
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
